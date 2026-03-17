@@ -1,0 +1,18 @@
+
+# You should know that Docker Compose works with services.
+# 1 service = 1 container.
+# For example, a service, a server, a client, a database...
+# We use the keyword 'services' to start to create services.
+services:
+  pgsql-db:
+    image: postgres:latest
+    container_name: pgsql-db
+    ports:
+      - 5432:5432
+    restart: always
+    volumes:
+      - pgsql-data:/var/lib/postgresql
+    environment:
+      POSTGRES_PASSWORD: "Ti6collegato!"
+volumes:
+  pgsql-data:
