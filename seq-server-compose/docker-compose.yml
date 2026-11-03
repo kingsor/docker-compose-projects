@@ -1,0 +1,25 @@
+services:
+  seq-server:
+    container_name: seq-server
+    image: datalust/seq:latest
+    volumes:
+      - seq-data:/data
+    ports:
+      - 8081:80
+      - 5341:5341
+    restart: unless-stopped
+    environment:
+      - ACCEPT_EULA=Y
+      # Setting SEQ_FIRSTRUN_NOAUTHENTICATION to True tells the system to start a new Seq instance without any administrator password or authentication enabled.
+      # It is highly useful for local development environments, temporary local testing, or automated integration test suites where security isn't a concern and you want to avoid logging in.
+      # If you are setting up a secure environment instead, you should remove this variable 
+      # and use SEQ_FIRSTRUN_ADMINPASSWORD or SEQ_FIRSTRUN_ADMINPASSWORDHASH to secure your instance from the start.
+      - SEQ_FIRSTRUN_NOAUTHENTICATION=True
+    networks:
+      - seq_net
+volumes:
+  seq-data:
+
+networks:
+  seq_net:
+    driver: bridge
